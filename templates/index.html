@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-
     {% load staticfiles %}
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -42,14 +41,13 @@
 
 
 <div class="main">
-
     <div class="artical-list">
         {% for foo in title %}
 
             <div class="item">
                 <a class="title" href="artical/?id={{ foo.id }}">{{ foo.headline }}</a>
                 <div class="status">{{ foo.create_time }} | by {{ foo.author }}</div>
-                <div class="content">
+                <div class="content-list">
                     {{ foo.contents | safe }}
                 </div>
             </div>

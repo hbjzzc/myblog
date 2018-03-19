@@ -20,14 +20,12 @@ a {
 .left {
     float: left;
     width: 20%;
-
 }
 
 .main {
     float: right;
     width: 80%;
     color: #454545;
-
 }
 
 .left .title {
@@ -95,5 +93,11 @@ a {
     top: 0px;
     left: 0px;
 }
+
+.content-list {
+    max-height: 100px;
+    overflow: hidden;
+}
+
 
 

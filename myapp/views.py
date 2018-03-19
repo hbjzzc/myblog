@@ -84,7 +84,7 @@ class Index(View):
 
         user = User.objects.filter(name=username).first()
 
-        title = user.title_set.all()
+        title = user.title_set.all().order_by('-create_time')
 
         context = {
             'user': user,
@@ -127,6 +127,7 @@ class NewArtical(View):
         print(type(title.create_time))
 
         return HttpResponse("发布成功")
+        # return redirect('index')
 
 
 '''文章详情'''
@@ -134,7 +135,6 @@ class NewArtical(View):
 
 class Artical(View):
     def get(self, request):
-
         username = request.session.get('name')
 
         id = request.GET.get('id')
@@ -142,8 +142,8 @@ class Artical(View):
         title = Title.objects.get(id=id)
 
         context = {
-            'name':username,
-            'title': title,
+            'name': username,
+            'title': title
         }
 
         return render(request, 'artical.html', context)
