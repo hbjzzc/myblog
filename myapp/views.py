@@ -1,4 +1,6 @@
 import time
+
+from django.contrib import auth
 from django.core.serializers import json
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -7,7 +9,7 @@ from myapp.models import User, Title
 import json, re
 from django.core.urlresolvers import reverse
 from django import db
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -20,7 +22,6 @@ class LoginView(View):
         return render(request, 'login.html')
 
     def post(self, request):
-
         username = request.POST.get('username')
 
         password = request.POST.get('password')
@@ -30,19 +31,13 @@ class LoginView(View):
             pass
             # return redirect(reverse('users:login'))
 
-        user = User.objects.filter(name=username).first()
+        user = auth.authenticate(username=username, password=password)
 
-        if (user):
-
-            if user.password == password:
-                request.session['name'] = username
-                return redirect('index')
-
-            else:
-                return render(request, 'login.html', {'errmsg': '密码错误'})
-
+        if user:
+            login(request, user)
+            return redirect(reverse('index'))
         else:
-            return render(request, 'login.html', {'errmsg': '用户不存在'})
+            return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
 
 
 '''注册页面'''
@@ -63,7 +58,8 @@ class RegisterView(View):
 
         try:
             # todo 有所改动,看create用法
-            user = User.objects.create(name=username, password=password)
+            # user = User.objects.create(name=username, password=password)
+            user = User.objects.create_user(username=username, password=password)
 
         except db.IntegrityError:
 
@@ -72,7 +68,7 @@ class RegisterView(View):
         user.save()
         print(username, password)
 
-        return HttpResponse('注册成功')
+        return redirect(reverse('index'))
 
 
 '''主页展示'''
@@ -80,17 +76,19 @@ class RegisterView(View):
 
 class Index(View):
     def get(self, request):
-        username = request.session.get('name')
 
-        user = User.objects.filter(name=username).first()
+        user = request.user
 
-        title = user.title_set.all().order_by('-create_time')
+        if user.is_authenticated():
+            title = user.title_set.all().order_by('-create_time')
+            context = {
+                'user': user,
+                'title': title
+            }
+            return render(request, 'index.html', context)
 
-        context = {
-            'user': user,
-            'title': title
-        }
-        return render(request, 'index.html', context)
+        else:
+            return redirect(reverse('login'))
 
 
 '''发布页面'''
@@ -113,21 +111,22 @@ class NewArtical(View):
         title.headline = data['title']
         title.contents = data['content']
 
-        username = request.session.get('name')
-        user = User.objects.filter(name=username).first()
-        title.user = user
+        user = request.user
 
-        title.author = username
-        # 当前时间
-        # TODO 数据库时间不对,不是东八区,少8小时(已解决,在setting里改时区)
-        localTime = time.localtime(time.time())
-        title.create_time = time.strftime('%Y.%m.%d', localTime)
-        title.save()
+        if user:
 
-        print(type(title.create_time))
+            title.user = user
+            title.author = user.username
+            # 当前时间
+            # TODO 数据库时间不对,不是东八区,少8小时(已解决,在setting里改时区)
+            localTime = time.localtime(time.time())
+            title.create_time = time.strftime('%Y.%m.%d', localTime)
+            title.save()
 
-        return HttpResponse("发布成功")
-        # return redirect('index')
+            return HttpResponse("发布成功")
+
+        else:
+            return redirect(reverse('login'))
 
 
 '''文章详情'''
@@ -135,15 +134,22 @@ class NewArtical(View):
 
 class Artical(View):
     def get(self, request):
-        username = request.session.get('name')
+        user = request.user
 
         id = request.GET.get('id')
 
         title = Title.objects.get(id=id)
 
         context = {
-            'name': username,
+            'name': user.username,
             'title': title
         }
 
         return render(request, 'artical.html', context)
+
+
+class Logout(View):
+    def get(self, request):
+        logout(request)
+
+        return redirect(reverse('login'))

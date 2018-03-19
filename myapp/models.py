@@ -1,14 +1,13 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
 
 
 # 创建用户模型
-class User(models.Model):
+class User(AbstractUser):
 
-    name = models.CharField(max_length=20, verbose_name="姓名")
     desc = models.CharField(max_length=100, verbose_name="个人简历")
-    password = models.CharField(max_length=20, verbose_name="密码")
 
     class Meta:
         db_table = "users"

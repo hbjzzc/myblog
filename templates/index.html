@@ -15,7 +15,7 @@
 <div class="left fixed">
 
     <div class="title">
-        <a href="" class="name">{{ user.name }}</a>
+        <a href="" class="name">{{ user.username }}</a>
         <div class="intro">个人简介:{{ user.desc }}</div>
     </div>
 
@@ -35,6 +35,8 @@
         <a href="#" class="item">Python</a>
         <a href="#" class="item">爬虫</a>
         <a href="#" class="item">HTML5</a>
+        <br>
+        <a href="{% url 'logout' %}" class="item">退出登录</a>
 
     </div>
 </div>

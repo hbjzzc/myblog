@@ -50,6 +50,8 @@ MIDDLEWARE_CLASSES = (
 
 )
 
+AUTH_USER_MODEL = 'myapp.User'
+
 ROOT_URLCONF = 'myblog.urls'
 
 TEMPLATES = [
