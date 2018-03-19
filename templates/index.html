@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>我的博客</title>
+    <link href="https://cdn.bootcss.com/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+<div class="left fixed">
+
+    <div class="title">
+        <a href="" class="name">{{ user.name }}</a>
+        <div class="intro">个人简介:{{ user.desc }}</div>
+    </div>
+
+
+    <div class="title">
+        <a href="{% url 'publish' %}" class="name">发布文章</a>
+    </div>
+
+
+    <div class="nav">
+        <a href="#" class="item">关于我</a>
+        <a href="#" class="item">联系我</a>
+        <a href="#" class="item">赞助我</a>
+    </div>
+
+    <div class="list">
+        <a href="#" class="item">Python</a>
+        <a href="#" class="item">爬虫</a>
+        <a href="#" class="item">HTML5</a>
+
+    </div>
+</div>
+
+
+<div class="main">
+
+    <div class="artical-list">
+        {% for foo in title %}
+
+            <div class="item">
+                <a class="title" href="artical/?id={{ foo.id }}">{{ foo.headline }}</a>
+                <div class="status">{{ foo.create_time }} | by {{ foo.author }}</div>
+                <div class="content">
+                    {{ foo.contents | safe }}
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+
+</body>
+</html>

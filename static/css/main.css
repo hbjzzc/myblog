@@ -1,0 +1,99 @@
+body {
+    background: #454545;
+    color: #eeeeee;
+    line-height: 1.6;
+}
+
+a {
+    color: #eeeeee;
+    text-decoration: none;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.left > * {
+    padding: 10px 15px;
+}
+
+.left {
+    float: left;
+    width: 20%;
+
+}
+
+.main {
+    float: right;
+    width: 80%;
+    color: #454545;
+
+}
+
+.left .title {
+    margin-bottom: 40px;
+}
+
+.left .nav a, .left .list a {
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    color: #888;
+}
+
+.left .nav a:hover, .left .list a:hover {
+    color: #eeeeee;
+    transition: 200ms;
+}
+
+.left .title .name {
+    padding: 10px 20px;
+    font-size: 30px;
+    line-height: 1;
+    display: inline-block;
+    margin-bottom: 10px;
+    border: 5px solid #eeeeee;
+}
+
+.artical-list {
+    padding: 20px 30px;
+    background: #eee;
+    margin-right: 30%;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.artical {
+    padding: 20px 30px;
+    background: #eee;
+    margin-right: 30%;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.artical-list .item > * {
+    margin: 10px 0px;
+}
+
+.artical-list .item {
+    margin-bottom: 25px;
+}
+
+.artical-list .item .title, artical .item .title {
+    font-size: 25px;
+    font-weight: 700;
+    color: #454545;
+}
+
+.artical-list .item .status {
+    font-size: 14px;
+    color: #aaaaaa;
+}
+
+.float {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+
+

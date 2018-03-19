@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>我的博客</title>
+    <link href="https://cdn.bootcss.com/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+<body>
+<div class="left fixed">
+
+    <div class="title">
+        <a href="" class="name">{{ name }}</a>
+        <div class="intro">留下你的故事</div>
+    </div>
+
+    <div class="nav">
+        <a href="#" class="item">关于我</a>
+        <a href="#" class="item">联系我</a>
+        <a href="#" class="item">赞助我</a>
+    </div>
+
+    <div class="list">
+        <a href="#" class="item">Python</a>
+        <a href="#" class="item">爬虫</a>
+        <a href="#" class="item">HTML5</a>
+
+    </div>
+</div>
+
+
+<div class="main">
+
+    <div class="artical">
+        <div class="item">
+            <h1 class="title">{{ title.headline }}</h1>
+            <div class="status">{{ title.create_time }} | by {{ title.author }}</div>
+            <br>
+            <div class="content"> {{ title.contents | safe }}</div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
